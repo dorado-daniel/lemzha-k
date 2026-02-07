@@ -1,0 +1,78 @@
+# ============================================
+# LEMM - .gitignore
+# ============================================
+
+# === Virtual Environment ===
+.venv/
+
+# === Raw Data (downloadable separately) ===
+# Nezha dataset (~2.9GB) - download from: https://github.com/IntelligentDDS/Nezha
+Nezha/
+
+# LEMMA raw data (~75GB) - obtain from original dataset
+log_data/
+metrics_data/
+Cloud_Computing_Preprocessed/
+
+# === Processed / Intermediate Data (regenerable via notebooks) ===
+# Run notebooks/02-Transform-Data/ to regenerate
+core_metrics_tmp/
+core_logs_tmp/
+core_multimodal_tmp/
+aligned_metrics_tmp/
+trimmed_metrics_tmp/
+
+# === Model Weights ===
+*.pt
+*.onnx
+
+# === Large Backups ===
+data_backup.zip
+
+# === Reference PDFs (not ours) ===
+*.pdf
+
+# === Validation Reports (regenerable via notebooks/03-Data-Validation/) ===
+notebooks/03-Data-Validation/unified_rca_reports/
+
+# === Analysis Artifacts (regenerable) ===
+fold3_logs_gt_analysis.json
+fold4_metrics_gt_analysis.json
+train_ticket_ground_truth_issues.json
+ablation_study_results.json
+
+
+# === Python ===
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# === Jupyter ===
+.ipynb_checkpoints/
+
+# === OS Files ===
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# === IDE ===
+.vscode/
+.idea/
+
+# === Duplicates / Temp ===
+*copy.*
+* copy.*
+*\ copy.*
+*\ copy\ *
+*.bak
+*.tmp
+
+# === HuggingFace / Sentence-Transformers Cache ===
+.cache/
+
+# === Download Logs ===
+wget-log*

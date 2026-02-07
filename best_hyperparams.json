@@ -1,0 +1,17 @@
+{
+  "d_model": 64,
+  "n_heads": 4,
+  "n_layers": 3,
+  "fusion_dim": 256,
+  "dropout": 0.27101640734341986,
+  "weight_decay": 1.1919481947918725e-05,
+  "label_smoothing": 0.010789142699330446,
+  "grad_clip_norm": 0.5471437785301014,
+  "batch_size": 8,
+  "lr": 0.00034827974366176894,
+  "warmup_epochs": 6,
+  "temperature": 0.11155743845534447,
+  "noise_std": 0.15111022770860974,
+  "mask_prob": 0.045759633098324495,
+  "jitter": 0
+}
