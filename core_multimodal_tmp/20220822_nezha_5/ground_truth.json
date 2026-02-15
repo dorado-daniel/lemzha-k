@@ -1,0 +1,28 @@
+{
+  "scenario_id": "20220822_nezha_5",
+  "fault_timestamp_raw": "2022-08-22 04:36:03+00:00",
+  "fault_bin": "2022-08-22 04:36:00+00:00",
+  "fault_time_idx": 6,
+  "root_cause_service": "cartservice",
+  "root_cause_service_idx": 1,
+  "root_cause_deployment": "cartservice-579f59597d",
+  "root_cause_pods": [
+    "cartservice-579f59597d-wc2lz"
+  ],
+  "root_cause_pod_indices": [
+    1
+  ],
+  "pod_to_idx": {
+    "adservice-5f6585d649-fnmft": 0,
+    "cartservice-579f59597d-wc2lz": 1,
+    "checkoutservice-578fcf4766-9csqn": 2,
+    "currencyservice-cf787dd48-vpjrd": 3,
+    "emailservice-55fdc5b988-f6xth": 4,
+    "frontend-579b9bff58-t2dbm": 5,
+    "paymentservice-9cdb6588f-554sm": 6,
+    "productcatalogservice-668d5f85fb-wckp8": 7,
+    "recommendationservice-6cfdd55578-gfj6q": 8,
+    "shippingservice-7b598fc7d-lmggd": 9
+  },
+  "fault_type": "cpu_contention"
+}

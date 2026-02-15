@@ -14,17 +14,13 @@ log_data/
 metrics_data/
 Cloud_Computing_Preprocessed/
 
-# === Processed / Intermediate Data (regenerable via notebooks) ===
-# Run notebooks/02-Transform-Data/ to regenerate
-core_metrics_tmp/
-core_logs_tmp/
-core_multimodal_tmp/
+# === Intermediate Data (regenerable, not needed) ===
 aligned_metrics_tmp/
 trimmed_metrics_tmp/
 
-# === Model Weights ===
-*.pt
-*.onnx
+# NOTE: core_metrics_tmp/, core_logs_tmp/, core_multimodal_tmp/ are
+# tracked in git (~61 MB) so the training pipeline works out of the box.
+
 
 # === Large Backups ===
 data_backup.zip

@@ -1,0 +1,39 @@
+{
+  "scenario": "20231221",
+  "ref_step_s": 30.0,
+  "n_ref_pts": 3592,
+  "metrics": {
+    "pod_level_data_pod_cpu_usage_total": {
+      "src_step_s": 1.0,
+      "tolerance_s": 15.0,
+      "max_drift_s": 0.0,
+      "nan_ratio": 0.0,
+      "imputed_ratio": 0.0,
+      "type": "gauge"
+    },
+    "pod_level_data_pod_memory_working_set": {
+      "src_step_s": 1.0,
+      "tolerance_s": 15.0,
+      "max_drift_s": 0.0,
+      "nan_ratio": 0.0,
+      "imputed_ratio": 0.0,
+      "type": "gauge"
+    },
+    "pod_level_data_pod_network_rx_bytes": {
+      "src_step_s": 1.0,
+      "tolerance_s": 15.0,
+      "max_drift_s": 0.0,
+      "nan_ratio": 0.0,
+      "imputed_ratio": 0.0,
+      "type": "rate"
+    },
+    "pod_level_data_pod_network_tx_bytes": {
+      "src_step_s": 1.0,
+      "tolerance_s": 15.0,
+      "max_drift_s": 0.0,
+      "nan_ratio": 0.0,
+      "imputed_ratio": 0.0,
+      "type": "rate"
+    }
+  }
+}

@@ -43,7 +43,7 @@ flowchart LR
 | Source | Scenarios | Apps | Duration | Fault Types |
 |--------|-----------|------|----------|-------------|
 | [Nezha](https://github.com/IntelligentDDS/Nezha) | 97 | OnlineBoutique, TrainTicket | ~10 min each | cpu_contention, cpu_consumed, network_delay, exception, return |
-| [LEMMA-RCA](https://zenodo.org/records/10568880) | 4 | Custom microservices | 22-46 hrs each | CPU stress, pod migration, malware, network issue |
+| [LEMMA-RCA](https://huggingface.co/datasets/Lemma-RCA-NEC/Cloud_Computing_Preprocessed) | 4 | Custom microservices | 22-46 hrs each | CPU stress, pod migration, malware, network issue |
 
 Each scenario contains:
 - **Metrics**: Up to 19 time-series per pod (CPU, memory, network, latency, workload, etc.), aligned to 30s bins
@@ -85,67 +85,66 @@ uv sync
 
 > Requires Python >= 3.12. Uses [uv](https://docs.astral.sh/uv/) for dependency management. GPU with CUDA recommended.
 
-### 2. Download datasets
+### 2. Processed data (included)
 
-The raw data is **not included** in the repository (see `.gitignore`). Download separately:
+The processed data needed for training is **included in the repo** (~61 MB, 98 scenarios):
+
+| Directory | Contents | Size |
+|-----------|----------|------|
+| `core_metrics_tmp/` | Aligned metric parquets (up to 19 per scenario) | 50 MB |
+| `core_logs_tmp/` | Service-level log parquets | 11 MB |
+| `core_multimodal_tmp/` | manifest.json + ground_truth.json per scenario | 1.4 MB |
+
+You can start training immediately — no raw data download needed.
+
+### 3. Run the pipeline
+
+```bash
+# Train the model
+jupyter notebook notebooks/04-Train/train_multimodal_rca.ipynb
+
+# Evaluate with LODOCV
+jupyter notebook notebooks/04-Train/05-LODOCV.ipynb
+
+# Hyperparameter search (optional)
+jupyter notebook notebooks/04-Train/optuna_hyperparam_search.ipynb
+```
+
+<details>
+<summary>Regenerating processed data from raw sources (optional)</summary>
+
+Download raw datasets (~7 GB total):
 
 | Dataset | Size | Download | Place in |
 |---------|------|----------|----------|
 | **Nezha** | ~2.9 GB | [GitHub](https://github.com/IntelligentDDS/Nezha) | `Nezha/rca_data/` |
-| **LEMMA-RCA** | ~75 GB | [Zenodo](https://zenodo.org/records/10568880) | `Cloud_Computing_Preprocessed/` |
+| **LEMMA-RCA** | ~75 GB | [HuggingFace](https://huggingface.co/datasets/Lemma-RCA-NEC/Cloud_Computing_Preprocessed) | `Cloud_Computing_Preprocessed/` |
 
-Expected structure after download:
-
-```
-lemm/
-├── Nezha/rca_data/
-│   ├── 2022-08-22/          # OnlineBoutique day 1
-│   ├── 2022-08-23/          # OnlineBoutique day 2
-│   ├── 2023-01-29/          # TrainTicket day 1
-│   └── 2023-01-30/          # TrainTicket day 2
-└── Cloud_Computing_Preprocessed/
-    ├── Metrics Data/        # ZIP files per scenario
-    └── Log Data/            # ZIP files per scenario
-```
-
-### 3. Run the pipeline
-
-Execute notebooks **in order**. Each step generates intermediate data consumed by the next:
+Then run notebooks in order:
 
 ```bash
-# Step 1: Convert LEMMA (only needed if using LEMMA data)
+# Step 1: Convert LEMMA (only if using LEMMA data)
 jupyter notebook notebooks/01-Convert-Scenarios/Convert-LemmaRCA-Scenarios.ipynb
 
 # Step 2: Transform to unified format
 jupyter notebook notebooks/02-Transform-Data/Transform-Data-Nezha.ipynb
 jupyter notebook notebooks/02-Transform-Data/Transform-Data-Lemma.ipynb  # optional
 
-# Step 3: Validate (optional but recommended)
+# Step 3: Validate
 jupyter notebook notebooks/03-Data-Validation/unified_rca_data_validation.ipynb
-
-# Step 4: Train or search hyperparameters
-jupyter notebook notebooks/04-Train/train_multimodal_rca.ipynb
-jupyter notebook notebooks/04-Train/optuna_hyperparam_search.ipynb  # optional
-
-# Step 5: Evaluate with LODOCV
-jupyter notebook notebooks/04-Train/05-LODOCV.ipynb
 ```
 
-> **Minimal path (Nezha only):** Steps 2b → 4 → 5. LEMMA steps (1, 2a) are optional.
+</details>
 
-### Generated data directories (gitignored)
+### Data directories
 
-These are created by the notebooks and excluded from version control:
-
-| Directory | Created by | Contents |
-|-----------|-----------|----------|
-| `metrics_data/` | Notebook 1 | Converted LEMMA .npy files |
-| `log_data/` | Notebook 1 | Converted LEMMA log CSVs |
-| `core_metrics_tmp/` | Notebooks 2a/2b | Parquet metric files per scenario |
-| `core_logs_tmp/` | Notebooks 2a/2b | Parquet log files per scenario |
-| `core_multimodal_tmp/` | Notebooks 2a/2b | manifest.json + ground_truth.json per scenario |
-| `*.pt` | Notebook 4 | Model weights (~91 MB) |
-| `*.onnx` | Notebook 4 | ONNX export for architecture visualization |
+| Directory | In repo? | Contents |
+|-----------|----------|----------|
+| `core_metrics_tmp/` | **yes** | Aligned metric parquets per scenario |
+| `core_logs_tmp/` | **yes** | Service-level log parquets per scenario |
+| `core_multimodal_tmp/` | **yes** | manifest.json + ground_truth.json per scenario |
+| `metrics_data/`, `log_data/` | no | Intermediate LEMMA conversion (gitignored) |
+| `Nezha/`, `Cloud_Computing_Preprocessed/` | no | Raw datasets (gitignored) |
 
 ## Model Configuration
 
@@ -203,9 +202,4 @@ lemm/
 ## References
 
 - **Nezha**: Yu et al., "Nezha: Interpretable Fine-Grained Root Causes Analysis for Microservices on Multi-Modal Observability Data", FSE 2023. [GitHub](https://github.com/IntelligentDDS/Nezha)
-- **LEMMA-RCA**: [Zenodo](https://zenodo.org/records/10568880)
-- **MiniLM**: Wang et al., "MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers", NeurIPS 2020.
-
-## License
-
-This project uses data from publicly available datasets. Please cite the original sources when using this work.
+- **LEMMA-RCA**: Zheng et al., "LEMMA-RCA: A Large Multi-modal Multi-domain Dataset for Root Cause Analysis", 2024. [HuggingFace](https://huggingface.co/datasets/Lemma-RCA-NEC/Cloud_Computing_Preprocessed)

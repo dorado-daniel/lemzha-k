@@ -1,0 +1,28 @@
+{
+  "scenario_id": "20220823_nezha_19",
+  "fault_timestamp_raw": "2022-08-23 14:55:55+00:00",
+  "fault_bin": "2022-08-23 14:55:30+00:00",
+  "fault_time_idx": 6,
+  "root_cause_service": "productcatalogservice",
+  "root_cause_service_idx": 7,
+  "root_cause_deployment": "productcatalogservice-668d5f85fb",
+  "root_cause_pods": [
+    "productcatalogservice-668d5f85fb-jhwx9"
+  ],
+  "root_cause_pod_indices": [
+    7
+  ],
+  "pod_to_idx": {
+    "adservice-5f6585d649-fnmft": 0,
+    "cartservice-579f59597d-wc2lz": 1,
+    "checkoutservice-578fcf4766-9csqn": 2,
+    "currencyservice-cf787dd48-vpjrd": 3,
+    "emailservice-55fdc5b988-f6xth": 4,
+    "frontend-579b9bff58-t2dbm": 5,
+    "paymentservice-9cdb6588f-554sm": 6,
+    "productcatalogservice-668d5f85fb-jhwx9": 7,
+    "recommendationservice-6cfdd55578-gfj6q": 8,
+    "shippingservice-7b598fc7d-lmggd": 9
+  },
+  "fault_type": "cpu_consumed"
+}
